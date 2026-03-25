@@ -5,6 +5,23 @@
     --text: #2f3f56;
     --muted: #647792;
     --accent: #4f84ff;
+    --shadow-dark: #c9d0dc;
+    --shadow-light: #ffffff;
+    --shadow-inset-dark: #d2d9e5;
+    --shadow-inset-light: #ffffff;
+}
+
+[data-theme="dark"] {
+    --bg: #1f2635;
+    --surface: #283246;
+    --surface-soft: #222c3f;
+    --text: #d4deee;
+    --muted: #9eacc4;
+    --accent: #7ea6ff;
+    --shadow-dark: #151c28;
+    --shadow-light: #33415a;
+    --shadow-inset-dark: #182132;
+    --shadow-inset-light: #32405a;
 }
 
 * {
@@ -19,6 +36,7 @@ body {
     padding: 24px;
     color: var(--text);
     background: radial-gradient(circle at 20% 10%, #f7f9fd, var(--bg));
+    transition: background 0.35s ease, color 0.35s ease;
 }
 
 .container {
@@ -50,10 +68,11 @@ h1 {
     border-radius: 24px;
     background: var(--surface);
     box-shadow:
-        10px 10px 20px #c9d0dc,
-        -10px -10px 20px #ffffff,
-        inset 6px 6px 10px #d1d7e3,
-        inset -6px -6px 10px #ffffff;
+        10px 10px 20px var(--shadow-dark),
+        -10px -10px 20px var(--shadow-light),
+        inset 6px 6px 10px var(--shadow-inset-dark),
+        inset -6px -6px 10px var(--shadow-inset-light);
+    transition: background 0.35s ease, box-shadow 0.35s ease;
 }
 
 h3 {
@@ -84,8 +103,9 @@ input {
     color: var(--text);
     background: var(--surface-soft);
     box-shadow:
-        inset 4px 4px 8px #d2d9e5,
-        inset -4px -4px 8px #ffffff;
+        inset 4px 4px 8px var(--shadow-inset-dark),
+        inset -4px -4px 8px var(--shadow-inset-light);
+    transition: background 0.35s ease, color 0.35s ease, box-shadow 0.35s ease;
 }
 
 input::placeholder {
@@ -100,8 +120,9 @@ button {
     color: #ffffff;
     background: var(--accent);
     box-shadow:
-        6px 6px 12px #c7cfdb,
-        -6px -6px 12px #ffffff;
+        6px 6px 12px var(--shadow-dark),
+        -6px -6px 12px var(--shadow-light);
+    transition: transform 0.3s ease, background 0.35s ease, box-shadow 0.35s ease;
 }
 
 button:active {
@@ -130,8 +151,35 @@ button:active {
     border-radius: 14px;
     background: var(--surface-soft);
     box-shadow:
-        inset 4px 4px 8px #d2d9e5,
-        inset -4px -4px 8px #ffffff;
+        inset 4px 4px 8px var(--shadow-inset-dark),
+        inset -4px -4px 8px var(--shadow-inset-light);
+}
+
+.theme-toggle {
+    position: fixed;
+    right: 18px;
+    bottom: 18px;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    padding: 0;
+    z-index: 999;
+    color: var(--text);
+    background: var(--surface);
+    box-shadow:
+        8px 8px 16px var(--shadow-dark),
+        -8px -8px 16px var(--shadow-light);
+}
+
+.theme-toggle span {
+    display: inline-block;
+    font-size: 1.3rem;
+    line-height: 1;
+    transition: transform 0.35s ease;
+}
+
+.theme-toggle.toggling span {
+    transform: rotate(20deg) scale(1.12);
 }
 
 .weather-item label {
@@ -164,5 +212,10 @@ button:active {
 
     .input-group button {
         width: 100%;
+    }
+
+    .theme-toggle {
+        right: 12px;
+        bottom: 12px;
     }
 }

@@ -5,6 +5,37 @@ const cityInput = document.getElementById("cityInput");
 const searchBtn = document.getElementById("searchBtn");
 const weatherBox = document.getElementById("weather");
 const historyBox = document.getElementById("history");
+const themeToggle = document.getElementById("themeToggle");
+const themeIcon = document.getElementById("themeIcon");
+const THEME_KEY = "weatherTheme";
+
+function applyTheme(theme) {
+    document.documentElement.setAttribute("data-theme", theme);
+    themeIcon.textContent = theme === "dark" ? "🌙" : "☀";
+}
+
+function initTheme() {
+    const savedTheme = localStorage.getItem(THEME_KEY);
+    if (savedTheme === "light" || savedTheme === "dark") {
+        applyTheme(savedTheme);
+        return;
+    }
+
+    applyTheme("light");
+}
+
+themeToggle.addEventListener("click", () => {
+    const currentTheme = document.documentElement.getAttribute("data-theme") || "light";
+    const nextTheme = currentTheme === "light" ? "dark" : "light";
+
+    themeToggle.classList.add("toggling");
+    applyTheme(nextTheme);
+    localStorage.setItem(THEME_KEY, nextTheme);
+
+    setTimeout(() => {
+        themeToggle.classList.remove("toggling");
+    }, 350);
+});
 
 async function getWeather(city) {
     const res = await fetch(
@@ -12,6 +43,7 @@ async function getWeather(city) {
     );
 
     if (!res.ok) {
+        alert("city not found")
         throw new Error("City not found");
     }
 
@@ -94,4 +126,5 @@ historyBox.addEventListener("click", (e) => {
     search(city);
 });
 
+initTheme();
 showHistory();
